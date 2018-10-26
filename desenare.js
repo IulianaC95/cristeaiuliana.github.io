@@ -1,4 +1,4 @@
-document.getElementById("id_business_version").innerHTML= "Bussiness verion 2018.10.26.8"
+document.getElementById("id_business_version").innerHTML= "Bussiness verion 2018.10.26.9"
 document.getElementById("id_start").addEventListener("click", start);
 document.getElementById("id_stop").addEventListener("click", stop);
 var intervalId;
@@ -22,15 +22,20 @@ function deseneaza_cerc(context, w, h, alpha)
 //----------------------------------------------------------------------
 function start()
 {
-    var canvas = document.getElementById("id_canvas");
+    var canvas = document.getElementById('id_canvas');
     var context = canvas.getContext('2d');
 
     document.getElementById("id_start").disabled = true;
     document.getElementById("id_stop").disabled = false;
  
 
-    
    intervalId = setInterval(deseneaza_cerc, 10, context, canvas.width, canvas.height, alpha, 100);
+
+   var my_worker = new Worker("calcul_prime.js");
+   my_worker.onmessage = function(e){
+       document.getElementById("id_prime").innerHTML = e.data;
+
+   }
 }
 
 function stop(){
